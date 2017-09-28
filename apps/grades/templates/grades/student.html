@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Add New Student</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+  </head>
+  <body>
+    <div class="ui container">
+        <div class="ui center aligned grid">
+          <div class="row">
+              <h1 class="ui teal header" style="padding-top:25px">Grade System 2.0</h1>
+          </div>
+        </div>
+        <div class="ui menu">
+          <a class="item" href="{% url 'main:index' %}">
+            <i class="home icon"></i>
+            Home
+          </a>
+          <a class="right aligned browse item">
+            <i class="user circle outline icon"></i>
+            logged in as {{request.session.name}}
+            <i class="dropdown icon"></i>
+          </a>
+          <div class="ui popup" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 679px;">
+            <div class="ui one column relaxed grid">
+              <div class="column">
+                <div class="ui link list">
+                  <a class="item">Update Profile</a>
+                  <hr>
+                  <a class="item" href="{% url 'users:logout' %}" method="post">Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    <div class="ui center aligned relaxed grid">
+      <div class="column">
+          <h3 class="ui teal header">Enter a New Student</h3>
+          <hr>
+      </div>
+    </div>
+    <div class="ui two column relaxed grid">
+      <div class="column">
+        <h4 class="ui teal header">New Student</h4>
+        <hr>
+        <form class="ui form" action="{% url 'main:create_student' %}" method="post">
+          {% csrf_token %}
+          <div class="field">
+            <label for="first_name">First Name</label>
+            <input type="text" name="first_name" id="first_name" placeholder="First Name"><br>
+          </div>
+          <div class="field">
+            <label for="last_name">Last Name</label>
+            <input type="text" name="last_name" id="last_name" placeholder="Last Name"><br>
+          </div>
+          <button class="ui teal basic button" type="submit" name="button">Add Student</button>
+        </form>
+      </div>
+      <div class="column">
+        <h4 class="ui teal header">All Students</h4>
+        <hr>
+        <ul class="ui list">
+          {% for student in students %}
+          <li class="item">{{student.last_name}}, {{student.first_name}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+
+  <script type="text/javascript">
+    $('.checkbox').change(function () {
+      $('.post').prop("disabled", !this.checked);
+      }).change()
+
+      $('.menu .browse').popup({
+          inline     : true,
+          hoverable  : true,
+          position   : 'bottom left',
+          delay: {
+            show: 300,
+            hide: 800
+          }
+        });
+  </script>
+  </body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Assignment</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+</head>
+  <body>
+    <div class="ui container">
+      <div class="ui center aligned grid">
+        <div class="row">
+            <h1 class="ui teal header" style="padding-top:25px">Grade System 2.0</h1>
+        </div>
+      </div>
+      <div class="ui menu">
+        <a class="item" href="{% url 'main:index' %}">
+          <i class="home icon"></i>
+          Home
+        </a>
+        <a class="right aligned browse item">
+          <i class="user circle outline icon"></i>
+          logged in as {{request.session.name}}
+          <i class="dropdown icon"></i>
+        </a>
+        <div class="ui popup" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 679px;">
+          <div class="ui one column relaxed grid">
+            <div class="column">
+              <div class="ui link list">
+                <a class="item">Update Profile</a>
+                <hr>
+                <a class="item" href="{% url 'users:logout' %}" method="post">Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui center aligned grid">
+          <div class="column">
+              <h3 class="ui teal header">New Assignment</h3>
+              <hr>
+          </div>
+      </div>
+    <div class="ui three column relaxed grid">
+      <div class="column">
+        <h4 class="ui teal header">Enter Assignment</h4>
+        <hr>
+        <form class="ui form" action="{% url 'main:create_assignment' %}" method="post">
+          {% csrf_token %}
+          <div class="field">
+            <label for="name">Assignment Name</label>
+            <input type="text" name="name" placeholder="Assignment Name">
+          </div>
+          <div class="field">
+            <label for="subject">Subject</label>
+            <select class="ui dropdown" name="subject">
+              <option value="Math">Math</option>
+              <option value="Reading">Reading</option>
+              <option value="Science">Science</option>
+              <option value="Social Studies">Social Studies</option>
+              <option value="Language Arts">Language Arts</option>
+              <option value="Music">Music</option>
+              <option value="Art">Art</option>
+            </select>
+          </div>
+          <input type="hidden" name="user_id" value={{request.session.user_id}}>
+          <button class="ui teal basic button" type="submit" name="button">Add Assignment</button>
+        </form>
+      </div>
+
+    <!-- Tables -->
+    <div class="column">
+      <table class="ui celled striped table">
+        <thead>
+          <tr>
+            <th colspan="3">Math</th>
+          </tr>
+          <tr>
+            <th>Assignment</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        {% for this in math %}
+        <tr>
+          <td><a href="{% url 'main:assign_grade' assign_id=this.id %}">{{this.assignment_name}}</a></td>
+          <td>{{this.created_at}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div class="column">
+    <table class="ui celled striped table">
+      <thead>
+        <tr>
+          <th colspan="3">Reading</th>
+        </tr>
+        <tr>
+          <th>Assignment</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      {% for this in reading %}
+      <tr>
+        <td><a href="{% url 'main:assign_grade' assign_id=this.id %}">{{this.assignment_name}}</a></td>
+        <td>{{this.created_at}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    </div>
+    <div class="column">
+    <table class="ui celled striped table">
+      <thead>
+        <tr>
+          <th colspan="3">Science</th>
+        </tr>
+        <tr>
+          <th>Assignment</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      {% for this in science %}
+      <tr>
+        <td><a href="{% url 'main:assign_grade' assign_id=this.id %}">{{this.assignment_name}}</a></td>
+        <td>{{this.created_at}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    </div>
+    <div class="column">
+    <table class="ui celled striped table">
+      <thead>
+        <tr>
+          <th colspan="3">Social Studies</th>
+        </tr>
+        <tr>
+          <th>Assignment</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      {% for this in social %}
+      <tr>
+        <td><a href="{% url 'main:assign_grade' assign_id=this.id %}">{{this.assignment_name}}</a></td>
+        <td>{{this.created_at}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    </div>
+    <div class="column">
+    <table class="ui celled striped table">
+      <thead>
+        <tr>
+          <th colspan="3">Language Arts</th>
+        </tr>
+        <tr>
+          <th>Assignment</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      {% for this in language %}
+      <tr>
+        <td><a href="{% url 'main:assign_grade' assign_id=this.id %}">{{this.assignment_name}}</a></td>
+        <td>{{this.created_at}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    </div>
+    <div class="column">
+    <table class="ui celled striped table">
+      <thead>
+        <tr>
+          <th colspan="3">Music</th>
+        </tr>
+        <tr>
+          <th>Assignment</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      {% for this in music %}
+      <tr>
+        <td><a href="{% url 'main:assign_grade' assign_id=this.id %}">{{this.assignment_name}}</a></td>
+        <td>{{this.created_at}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+    <div class="column">
+    <table class="ui celled striped table">
+      <thead>
+        <tr>
+          <th colspan="3">Art</th>
+        </tr>
+        <tr>
+          <th>Assignment</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      {% for this in art %}
+      <tr>
+        <td><a href="{% url 'main:assign_grade' assign_id=this.id %}">{{this.assignment_name}}</a></td>
+        <td>{{this.created_at}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    </div>
+  </div>
+  </div>
+
+  <script type="text/javascript">
+    $('.menu .browse').popup({
+        inline     : true,
+        hoverable  : true,
+        position   : 'bottom left',
+        delay: {
+          show: 300,
+          hide: 800
+        }
+      })
+  </script>
+  </body>
+</html>

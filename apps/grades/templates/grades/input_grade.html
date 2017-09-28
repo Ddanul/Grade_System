@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Input Grades</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+</head>
+  <body>
+    <div class="ui container">
+      <div class="ui center aligned grid">
+        <div class="row">
+            <h1 class="ui teal header" style="padding-top:25px">Grade System 2.0</h1>
+        </div>
+      </div>
+      <div class="ui menu">
+        <a class="item" href="{% url 'main:index' %}">
+          <i class="home icon"></i>
+          Home
+        </a>
+        <a class="item" href="{% url 'main:new_assignment' %}">
+          <i class="left arrow icon"></i>
+          Back
+        </a>
+        <a class="right aligned browse item">
+          <i class="user circle outline icon"></i>
+          logged in as {{request.session.name}}
+          <i class="dropdown icon"></i>
+        </a>
+        <div class="ui popup" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 679px;">
+          <div class="ui one column relaxed grid">
+            <div class="column">
+              <div class="ui link list">
+                <a class="item">Update Profile</a>
+                <hr>
+                <a class="item" href="{% url 'users:logout' %}" method="post">Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="ui center aligned relaxed grid">
+      <div class="column">
+        <h2 class="ui teal header">Enter Grades</h2>
+        <hr>
+      </div>
+    </div>
+    <div class="ui two column relaxed grid">
+      <div class="column">
+        <table class="ui celled striped table">
+          <thead>
+            <tr>
+              <th colspan="3" class="ui teal header">{{assignment.assignment_name}}</th>
+            </tr>
+            <tr>
+              <th>Student</th>
+              <th>Current Grade</th>
+              <th>Grade</th>
+            </tr>
+          </thead>
+          <form class="ui form" action="{% url 'main:submit_grade' assign_id=assignment.id  %}" method="post">
+            {% csrf_token %}
+            {% for kid in students %}
+            <tr>
+              <td>{{kid.first_name}} {{kid.last_name}}</td>
+              {% for grade in grades %}
+              {% if grade.student.id == kid.id %}
+                  <td>{{grade.grado}}</td>
+              {% endif %}
+              {% endfor %}
+              <td>
+                <div class="form-group">
+                  <input type="hidden" name="student_id" value="{{kid.id}}">
+                  <input type="number" id="grade" name="grade" value="{{kid.student_grade.grado}}" placeholder="0">
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <button class="ui basic teal button" type="submit" name="btn btn-info">Submit Grades</button>
+      </form>
+      </div>
+      <div class="column">
+
+      </div>
+      </div>
+    </div>
+  </body>
+</html>

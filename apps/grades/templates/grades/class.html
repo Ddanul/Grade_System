@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Add New Class</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+</head>
+  <body>
+    <div class="ui container">
+      <div class="ui center aligned grid">
+        <div class="row">
+            <h1 class="ui teal header" style="padding-top:25px">Grade System 2.0</h1>
+        </div>
+      </div>
+      <div class="ui menu">
+        <a class="item" href="{% url 'main:index' %}">
+          <i class="home icon"></i>
+          Home
+        </a>
+        <a class="right aligned browse item">
+          <i class="user circle outline icon"></i>
+          logged in as {{request.session.name}}
+          <i class="dropdown icon"></i>
+        </a>
+        <div class="ui popup" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 679px;">
+          <div class="ui one column relaxed grid">
+            <div class="column">
+              <div class="ui link list">
+                <a class="item">Update Profile</a>
+                <hr>
+                <a class="item" href="{% url 'users:logout' %}" method="post">Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="ui center aligned grid">
+        <div class="column">
+            <h3 class="ui teal header">Update Your Class</h3>
+            <hr>
+        </div>
+    </div>
+
+    <div class="ui two column relaxed grid">
+        <div class="column">
+          <h4 class="ui teal header">Choose your students:</h4>
+          <form action="{% url 'main:create_class' %}" method="post">
+            {% csrf_token %}
+            {% for student in students %}
+            <input type="hidden" name="user_id" value={{request.session.user_id}}>
+            <input type="radio" name="student_id" value={{student.id}} style="margin-right:15px">{{student.first_name}} {{student.last_name}}<br>
+            {% endfor %}
+            <button class="ui basic teal button" style="margin-top:25px" type="submit" name="button">Add Student</button>
+          </form>
+        </div>
+        <div class="column">
+          <h4 class="ui teal header">Students Currently in Class:</h4>
+          <ul class="ui bulleted list">
+            {% for kid in class %}
+            <li class="item">{{kid.first_name}} {{kid.last_name}}</li>
+            {% endfor %}
+          </ul>
+        </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+  $('.menu .browse').popup({
+    inline     : true,
+    hoverable  : true,
+    position   : 'bottom left',
+    delay: {
+      show: 300,
+      hide: 800
+    }
+  })
+  </script>
+  </body>
+</html>

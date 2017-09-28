@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <title>Graph</title>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+
+  </head>
+  <body>
+    <div class="ui container">
+        <div class="ui center aligned grid">
+          <div class="row">
+              <h1 class="ui teal header" style="padding-top:25px">Grade System 2.0</h1>
+          </div>
+        </div>
+        <div class="ui menu">
+          <a class="item" href="{% url 'main:index' %}">
+            <i class="home icon"></i>
+            Home
+          </a>
+          <a class="item" href="{% url 'main:student_grades' student_id=student.id %}">
+            <i class="left arrow icon"></i>
+            Back
+          </a>
+          <a class="right aligned browse item">
+            <i class="user circle outline icon"></i>
+            logged in as {{request.session.name}}
+            <i class="dropdown icon"></i>
+          </a>
+          <div class="ui popup" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 679px;">
+            <div class="ui one column relaxed grid">
+              <div class="column">
+                <div class="ui link list">
+                  <a class="item">Update Profile</a>
+                  <hr>
+                  <a class="item" href="{% url 'users:logout' %}" method="post">Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ui center aligned grid" style="border:solid 1px gainsboro; border-radius:5px; margin-top:50px">
+          {{ chart.as_html }}
+        </div>
+    </div>
+
+    <script type="text/javascript">
+      $('.checkbox').change(function () {
+        $('.post').prop("disabled", !this.checked);
+        }).change()
+
+        $('.menu .browse').popup({
+            inline     : true,
+            hoverable  : true,
+            position   : 'bottom left',
+            delay: {
+              show: 300,
+              hide: 800
+            }
+          });
+    </script>
+  </body>
+</html>

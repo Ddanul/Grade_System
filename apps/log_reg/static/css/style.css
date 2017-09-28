@@ -1,0 +1,11 @@
+#column{
+  vertical-align: middle;
+}
+
+.ui.large.form{
+  margin: 0 auto;
+}
+
+#errors{
+  border: solid 5px red;
+}

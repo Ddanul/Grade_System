@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Assignment</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+  </head>
+  <body>
+    <div class="ui container">
+      <div class="ui center aligned grid">
+        <div class="row">
+            <h1 class="ui teal header" style="padding-top:25px">Grade System 2.0</h1>
+        </div>
+      </div>
+      <div class="ui menu">
+        <a class="item" href="{% url 'main:index' %}">
+          <i class="home icon"></i>
+          Home
+        </a>
+        <a class="right aligned browse item">
+          <i class="user circle outline icon"></i>
+          logged in as {{request.session.name}}
+          <i class="dropdown icon"></i>
+        </a>
+        <div class="ui popup" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 679px;">
+          <div class="ui one column relaxed grid">
+            <div class="column">
+              <div class="ui link list">
+                <a class="item">Update Profile</a>
+                <hr>
+                <a class="item" href="{% url 'users:logout' %}" method="post">Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui center aligned grid">
+          <div class="column">
+              <h2 class="ui teal header">{{assignment.assignment_name}}</h2>
+              <h3 class="ui teal header">{{assignment.subject}}</h3>
+              <hr>
+          </div>
+      </div>
+      <table class="ui celled striped table">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student in class %}
+          <tr>
+            <td>{{student.student.first_name}} {{student.student.last_name}}</td>
+            <td>{{student.grado}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
